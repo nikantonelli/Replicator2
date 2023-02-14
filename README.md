@@ -31,15 +31,15 @@ Option | Argument | Description
 -S |  | Include a comment in export containing link to original _Source_ (will not get imported if -C not used)
 
 ## Example Option combinations
-* To completely remove destination board(s) and remake it with a complete copy of cards, custom fields, custom icons, board levels, layout:<br>
+* To completely remove destination board(s) and remake it with a complete copy of cards, custom fields, custom icons, board levels, layout (not using Portfolios):<br>
   java -jar replicator\target\replicator-1.1-jar-with-dependencies.jar -f ..\demo.xlsx -e -R -r -l -i
-* To delete all cards on destination board(s) and recreate the cards from a previous export:<br>
+* To delete all cards on destination board(s) and recreate the cards from a previous export (not using Portfolios):<br>
   java -jar replicator\target\replicator-1.1-jar-with-dependencies.jar -f ..\demo.xlsx -d -i
-* To update the layout of destination board(s) with changes from their source:<br>
+* To update the layout of destination board(s) with changes from their source (not using Portfolios):<br>
   java -jar replicator\target\replicator-1.1-jar-with-dependencies.jar -f ..\demo.xlsx -l
-* To create a brand new copy of a board (deleting the original) with all the cards, with attachments, tasks, comments, etc <br>
+* To create a brand new copy of a board (deleting the original) with all the cards, with attachments, tasks, comments, etc (not using Portfolios)<br>
   java -jar replicator\target\replicator-1.1-jar-with-dependencies.jar -f "demo.xlsx" -x 3 -e -C -S -T -A -R -r -i
-* To create a master file to move Portfolios items to the right place and then import some more features/stories. Export from a completed board with: <br>
+* To create a master file that generates instructions move Portfolios items to the right place and then import some more features/stories. Export from a completed (connected to Portfolios) board with: <br>
   java -jar replicator\target\replicator-1.1-jar-with-dependencies.jar -f "demo.xlsx" -x 3 -e -c<br>
   Then after you have created the destination board and populated with the new Portfolios items, import and reconnect (the non-ignored items) with:<br>
   java -jar replicator\target\replicator-1.1-jar-with-dependencies.jar -f "demo.xlsx" -x 3 -i -c
@@ -58,11 +58,21 @@ If the items from Portfolios have children that are on multiple boards, you need
 
 To create the initial _template_
 1. Create master environment that has all items from Portfolios in the desired AgilePlace lanes, and all children. Portfolios drops all items into the default drop lane. This app will take those items whenDecide which item types are 
-2. Create Excel spreadsheet containing the Export of all the boards required.
+2.  Either:<br>
+	Create Excel spreadsheet containing the Export of all the boards required and ignore Portfolios from now on (not using -c option)<br>
+	Or:<br>
+	Create a specific carefully crafted Excel spreadsheet by using the -c option on export after you put "Initiatives,Epics" into the Import Ignore column
 
 To replicate:
-1. Delete
-Delete cards from the board that is connected 
+1. Delete cards from the board that is connected to Portfolios<br>
+	This will cause the Integration Hub to remove all the links to the cards on that board inside Portfolios (nice and tidy)
+2. OPTIONAL: <br>
+   Run a refresh on PLT DB from your preferred backup (that you created after deleting all links to AgilePlace from it)<br>
+   Run the script to  set the LK_SYNC flags to yes for all Initiatives<br>
+   Run the script to  set the LK_SYNC flags to yes for all Epics<br>
+   These actions will bring the Initiatives and Epics over from Portfolios again (with the correct _new_ IDs).<br>
+3. Run the import from the _template_ Excel spreadsheet you created above. Note: if you have done the optional steps above and want to relink up to Portfolios, the import command must use the -c option
+
 ## Parent/Child Relationships
  
 The use of the spreadsheet allows the indirect logging of the parent/child relationships. This is useful when you don't yet know the Id of the cards in the destination board. A 'Modify' row in the Changes sheet will allow you to point a child to a parent item by using a FORMULA in the cell using a card title.
