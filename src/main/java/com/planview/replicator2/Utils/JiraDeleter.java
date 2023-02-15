@@ -22,7 +22,7 @@ public class JiraDeleter {
 		for (int i = 0; i < adoDeletes.length; i++) {
 			String url = adoDeletes[i];
 			jAcc.deleteTicket(url);
-			d.p(Debug.INFO, "Delete attempted %s", url);	
+			d.p(Debug.INFO, "Delete attempted %s\n", url);	
 		}
 		return 0;
 	}

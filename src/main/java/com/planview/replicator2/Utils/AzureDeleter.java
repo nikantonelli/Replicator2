@@ -23,9 +23,9 @@ public class AzureDeleter {
 		for (int i = 0; i < adoDeletes.length; i++) {
 			String url = adoDeletes[i];
 			if ( null != aAcc.deleteTicket(url)) {
-				d.p(Debug.INFO, "Deleted %s", url);
+				d.p(Debug.INFO, "Deleted %s\n", url);
 			} else {
-				d.p(Debug.INFO, "Failed to delete %s", url);
+				d.p(Debug.INFO, "Failed to delete %s\n", url);
 			}
 		}
 		return 0;
