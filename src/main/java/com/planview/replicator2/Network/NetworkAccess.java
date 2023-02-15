@@ -168,7 +168,7 @@ public class NetworkAccess {
 				}
 				case 204: // No response expected. but return affirmative
 				{
-					result = new BasicHttpEntity();
+					
 					break;
 				}
 				case 400: {
