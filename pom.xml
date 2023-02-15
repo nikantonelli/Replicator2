@@ -81,7 +81,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>target/</classpathPrefix>
-                            <mainClass>com.planview.replicator.Main</mainClass>
+                            <mainClass>com.planview.replicator2.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
