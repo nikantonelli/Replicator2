@@ -13,6 +13,8 @@ public class CustomField {
     public Object value;
     public Integer index;
     public ChoiceConfig choiceConfiguration;
+	public Date createdOn, createdBy;
+	
     public String getFieldId() {
 		return fieldId;
 	}
@@ -73,5 +75,4 @@ public class CustomField {
 	public void setCreatedBy(Date createdBy) {
 		
 	}
-	public Date createdOn, createdBy;
 }

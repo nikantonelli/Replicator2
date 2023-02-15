@@ -7,7 +7,7 @@ public class ChoiceConfig {
 		return choices;
 	}
 
-	public void setChoices(String[] choices) {
-		this.choices = choices;
+	public void setChoices(String[] pChoices) {
+		choices = pChoices;
 	}
 }

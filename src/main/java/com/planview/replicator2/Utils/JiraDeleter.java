@@ -21,11 +21,8 @@ public class JiraDeleter {
 		}
 		for (int i = 0; i < adoDeletes.length; i++) {
 			String url = adoDeletes[i];
-			if ( null != jAcc.deleteTicket(url)) {
-				d.p(Debug.INFO, "Deleted %s", url);
-			} else {
-				d.p(Debug.INFO, "Failed to delete %s", url);
-			}
+			jAcc.deleteTicket(url);
+			d.p(Debug.INFO, "Delete attempted %s", url);	
 		}
 		return 0;
 	}
