@@ -23,6 +23,7 @@ import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
+import org.apache.http.entity.BasicHttpEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
@@ -165,8 +166,9 @@ public class NetworkAccess {
 					entityTaken = true;
 					break;
 				}
-				case 204: // No response expected
+				case 204: // No response expected. but return affirmative
 				{
+					result = new BasicHttpEntity();
 					break;
 				}
 				case 400: {
@@ -179,6 +181,10 @@ public class NetworkAccess {
 				}
 				case 403: {
 					d.p(Debug.ERROR, "Forbidden by server: %s\n", request.toString());
+					break;
+				}
+				case 405: {
+					d.p(Debug.ERROR, "Method not Allowed: %s\n", request.toString());
 					break;
 				}
 				case 429: { // Flow control

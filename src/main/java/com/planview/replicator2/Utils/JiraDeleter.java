@@ -13,7 +13,7 @@ public class JiraDeleter {
 		d.setLevel(config.debugLevel);
 
 		//Check that we have both user and token as ADO is non-standard.
-		if ((config.jira.getUser() != null) && (config.ado.getApiKey() != null)){
+		if (config.ado.getApiKey() != null){
 			jAcc = new JiraAccess(config.jira, cfg.debugLevel);
 		}
 		else {

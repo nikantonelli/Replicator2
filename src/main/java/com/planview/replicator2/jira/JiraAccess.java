@@ -10,11 +10,19 @@ public class JiraAccess  extends NetworkAccess {
 	public JiraAccess(AccessConfig configp, Integer debugLevel) {
 		config = configp;
 		d.setLevel(debugLevel);
-
-		configCheck();
 	}
 
 	public Object deleteTicket(String url) {
+		if (url != null) {
+			//Split the URL into bits
+			url = url.substring(8);
+			String[] urlBits = url.split("/");
+			reqUrl = "https://"+  urlBits[0] + "/rest/api/3/issue/" + urlBits[urlBits.length-1];
+			reqParams.clear();
+			reqHdrs.clear();
+			reqType = "DELETE";
+			return processRequest();
+		}
 		return null;
 	}
 }
