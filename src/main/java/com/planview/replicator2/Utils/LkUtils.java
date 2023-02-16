@@ -337,6 +337,8 @@ public class LkUtils {
 		if (newCard != null) {
 			if (cache != null) {
 				cache.setCard(newCard);
+				//Card create might have changed size/count, so refetch Board lane info for WIP control
+				cache.unsetBoardById((String)fieldLst.get("boardId"));
 			}
 		}
 		return newCard;
@@ -367,6 +369,8 @@ public class LkUtils {
 			card = lka.updateCardFromId(brd, card, updates);
 			if ((cache != null) && (card != null)){
 				cache.setCard(card);
+				//Card update might have changed size/count, so refetch Board lane info for WIP control
+				cache.unsetBoardById(brd.id);
 			}
 		}
 

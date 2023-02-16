@@ -44,19 +44,20 @@ public class Importer {
 		cfg.changesSheet = cfg.wb
 				.getSheet(XlUtils.validateSheetName(InternalConfig.CHANGES_SHEET_NAME + cfg.source.getBoardName()));
 
-		//Check for source information
+		// Check for source information
 		if (null == cfg.changesSheet) {
-			d.p(Debug.ERROR, "Cannot find required Changes sheet \"%s\" in file: \"%s\" Have you done the export?\n", 
-				InternalConfig.CHANGES_SHEET_NAME + cfg.source.getBoardName(),
-				cfg.xlsxfn
-			);
+			d.p(Debug.ERROR, "Cannot find required Changes sheet \"%s\" in file: \"%s\" Have you done the export?\n",
+					InternalConfig.CHANGES_SHEET_NAME + cfg.source.getBoardName(),
+					cfg.xlsxfn);
 			System.exit(1);
 		}
 
-		//Check for destination information - i.e. does destination exist?
+		// Check for destination information - i.e. does destination exist?
 		Board brd = LkUtils.getBoardByTitle(cfg, cfg.destination);
 		if (brd == null) {
-			d.p(Debug.ERROR, "Cannot find required destination board shown in file: \"%s\" Do you need -r (remake) option?\n", cfg.destination.getBoardName());
+			d.p(Debug.ERROR,
+					"Cannot find required destination board shown in file: \"%s\" Do you need -r (remake) option?\n",
+					cfg.destination.getBoardName());
 			System.exit(2);
 		}
 		ChangesColumns cc = XlUtils.checkChangeSheetColumns(cfg.changesSheet);
@@ -107,7 +108,7 @@ public class Importer {
 			CellReference ca = new CellReference(cf);
 			XSSFSheet iSht = cfg.wb.getSheet(ca.getSheetName());
 			if (iSht == null) {
-				d.p(Debug.ERROR, "Cannot find required sheet for board \"%s\"\n", ca.getSheetName() );
+				d.p(Debug.ERROR, "Cannot find required sheet for board \"%s\"\n", ca.getSheetName());
 				System.exit(13);
 			}
 			item = iSht.getRow(ca.getRow());
@@ -170,7 +171,7 @@ public class Importer {
 				id = doAction(change, item);
 				if (id != null) {
 					d.p(Debug.INFO, "Mod: \"%s\" on card \"%s\" (changes row %s)\n",
-							field, id, change.getRowNum()+1);
+							field, id, change.getRowNum() + 1);
 				}
 			}
 			if (id != null) {
@@ -236,6 +237,27 @@ public class Importer {
 			} else {
 				flds.put("boardId", XlUtils.getCell(item, fieldLst.getInt("boardId")));
 			}
+			if (flds.has("laneId")) {
+				String val = (String) flds.get("laneId");
+				// Need to check WIP on destination
+				
+					Board brd = LkUtils.getBoardByTitle(cfg, cfg.destination);
+					Lane foundLane = LkUtils.getLaneFromId(brd.lanes, val);
+					if (foundLane != null) {
+						Integer limit = 0;
+						if (brd.baseWipOnCardSize) {
+							if (flds.has("size")){
+								limit = foundLane.cardSize + (Integer) flds.get("size");
+							}
+						} else {
+							limit = foundLane.cardCount + 1;
+						}
+						if (limit >= foundLane.wipLimit) {
+							flds.append("wipOverrideComment", "Forced by Replicator");
+						}
+				}
+			}
+
 			Card card = LkUtils.createCard(cfg, cfg.destination, flds); // Change from human readable to API fields on
 			// the way
 			if (card == null) {
@@ -334,7 +356,7 @@ public class Importer {
 												}
 											}
 										}
-										vals.put("value",usersToPut.toArray());
+										vals.put("value", usersToPut.toArray());
 										fld.put("assignedUserIds", vals);
 									}
 								}
@@ -371,14 +393,24 @@ public class Importer {
 							break;
 						}
 						case ColNames.LANE: {
-							String[] bits = ((String) XlUtils.getCell(change, cc.value)).split(InternalConfig.SPLIT_WIP_REGEX_CHAR);
-							Lane foundLane = LkUtils.getLaneFromBoardTitle(cfg, cfg.destination,
-									cfg.destination.getBoardName(),
-									bits[0]);
+							String[] bits = ((String) XlUtils.getCell(change, cc.value))
+									.split(InternalConfig.SPLIT_WIP_REGEX_CHAR);
+							Board brd = LkUtils.getBoardByTitle(cfg, cfg.destination);
+							Lane foundLane = LkUtils.getLaneFromBoardId(cfg, cfg.destination, brd.id, bits[0]);
 							if (foundLane != null) {
 								vals.put("value", foundLane.id);
 								if (bits.length > 1) {
 									vals.put("value2", bits[1]);
+								} else {
+									Integer limit = 0;
+									if (brd.baseWipOnCardSize) {
+										limit = foundLane.cardSize;
+									} else {
+										limit = foundLane.cardCount;
+									}
+									if (limit >= foundLane.wipLimit) {
+										vals.put("value2", "Forced By Replicator");
+									}
 								}
 								fld.put("Lane", vals);
 							}
