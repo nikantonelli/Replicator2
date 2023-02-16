@@ -323,20 +323,6 @@ public class LeanKitAccess extends NetworkAccess {
 		return tasks;
 	}
 
-	private ArrayList<Board> fetchBoardsFromName(String name) {
-		reqParams.clear();
-		reqHdrs.clear();
-		reqType = "GET";
-		reqUrl = "/io/board";
-		reqEnt = null;
-		reqParams.add(new BasicNameValuePair("search", name));
-
-		// Once you get the boards, you could cache them. There may be loads, but
-		// shouldn't max
-		// out memory.
-		return read(Board.class);
-	}
-
 	public Board updateBoardById(String id, JSONObject updates) {
 		reqHdrs.clear();
 		reqType = "PATCH";
@@ -476,29 +462,6 @@ public class LeanKitAccess extends NetworkAccess {
 					e.printStackTrace();
 				}
 				break;
-			}
-		}
-		return null;
-	}
-
-	public Board fetchBoard(String name) {
-
-		ArrayList<Board> brd = fetchBoardsFromName(name);
-		Board bd = null;
-		if (brd != null) {
-			if (brd.size() > 0) {
-				// We found one or more with this name search. First try to find an exact match
-				Iterator<Board> bItor = brd.iterator();
-				while (bItor.hasNext()) {
-					Board b = bItor.next();
-					if (b.title.equals(name)) {
-						bd = b;
-					}
-				}
-				// Then take the first if that fails
-				if (bd == null)
-					bd = brd.get(0);
-				return fetchBoardFromId(bd.id);
 			}
 		}
 		return null;

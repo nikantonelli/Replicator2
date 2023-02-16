@@ -23,7 +23,6 @@ import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpRequestBase;
-import org.apache.http.entity.BasicHttpEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
@@ -78,7 +77,7 @@ public class NetworkAccess {
 		// Deal with delays, retries and timeouts
 		HttpClientBuilder cbldr = HttpClients.custom().setConnectionManager(cm);
 		RequestConfig.Builder configBuilder = RequestConfig.custom();
-		configBuilder.setSocketTimeout(40000); // Set all timeouts to 40sec.
+		configBuilder.setSocketTimeout(40000); // Set all timeouts to 40sec.O
 		configBuilder.setConnectTimeout(40000);
 		configBuilder.setConnectionRequestTimeout(40000);
 		cbldr.setDefaultRequestConfig(configBuilder.build());

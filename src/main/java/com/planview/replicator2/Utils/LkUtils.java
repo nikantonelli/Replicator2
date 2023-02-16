@@ -358,7 +358,7 @@ public class LkUtils {
 				cache.setCard(card);
 		}
 		if (brd == null) {
-			brd = lka.fetchBoardFromId(accessCfg.getBoardName());
+			brd = lka.fetchBoardFromTitle(accessCfg.getBoardName());
 			if ((brd != null) && (cache != null))
 				cache.setBoard(brd);
 		}
