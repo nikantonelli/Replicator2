@@ -237,24 +237,23 @@ public class Importer {
 			} else {
 				flds.put("boardId", XlUtils.getCell(item, fieldLst.getInt("boardId")));
 			}
-			if (flds.has("laneId")) {
-				String val = (String) flds.get("laneId");
+			if (flds.has("laneId") && !flds.has("wipOverrideComment")) {
 				// Need to check WIP on destination
-				
-					Board brd = LkUtils.getBoardByTitle(cfg, cfg.destination);
-					Lane foundLane = LkUtils.getLaneFromId(brd.lanes, val);
-					if (foundLane != null) {
-						Integer limit = 0;
-						if (brd.baseWipOnCardSize) {
-							if (flds.has("size")){
-								limit = foundLane.cardSize + (Integer) flds.get("size");
-							}
-						} else {
-							limit = foundLane.cardCount + 1;
+				String val = (String) flds.get("laneId");
+				Board brd = LkUtils.getBoardByTitle(cfg, cfg.destination);
+				Lane foundLane = LkUtils.getLaneFromId(brd.lanes, val);
+				if (foundLane != null) {
+					Integer limit = 0;
+					if (brd.baseWipOnCardSize) {
+						if (flds.has("size")) {
+							limit = foundLane.cardSize + (Integer) flds.get("size");
 						}
-						if (limit >= foundLane.wipLimit) {
-							flds.append("wipOverrideComment", "Forced by Replicator");
-						}
+					} else {
+						limit = foundLane.cardCount + 1;
+					}
+					if (limit >= foundLane.wipLimit) {
+						flds.append("wipOverrideComment", "Forced by Replicator");
+					}
 				}
 			}
 
