@@ -26,6 +26,8 @@ public class CardDeleter {
 		String[] jiraDeletes = {};
 		String[] apDeletes = {};
 
+		if (cards == null) return;
+		
 		for (int i = 0; i < cards.size(); i++) {
 			apDeletes = (String[]) ArrayUtils.add(apDeletes, cards.get(i).id);
 			ExternalLink[] extUrls = cards.get(i).externalLinks;
