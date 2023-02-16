@@ -1,4 +1,4 @@
-package com.planview.replicator2.leankit;
+package com.planview.replicator2.Leankit;
 
 public class CustomIcon {
     public String  id,

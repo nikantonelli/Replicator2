@@ -25,19 +25,18 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.planview.replicator2.AccessConfig;
-import com.planview.replicator2.ChangesColumns;
-import com.planview.replicator2.ColNames;
-import com.planview.replicator2.Configuration;
-import com.planview.replicator2.Debug;
-import com.planview.replicator2.InternalConfig;
-import com.planview.replicator2.leankit.BoardUser;
-import com.planview.replicator2.leankit.Card;
-import com.planview.replicator2.leankit.CardType;
-import com.planview.replicator2.leankit.CustomField;
-import com.planview.replicator2.leankit.CustomIcon;
-import com.planview.replicator2.leankit.Lane;
-import com.planview.replicator2.leankit.User;
+import com.planview.replicator2.Leankit.BoardUser;
+import com.planview.replicator2.Leankit.Card;
+import com.planview.replicator2.Leankit.CardType;
+import com.planview.replicator2.Leankit.CustomField;
+import com.planview.replicator2.Leankit.CustomIcon;
+import com.planview.replicator2.Leankit.Lane;
+import com.planview.replicator2.Leankit.User;
+import com.planview.replicator2.System.AccessConfig;
+import com.planview.replicator2.System.ChangesColumns;
+import com.planview.replicator2.System.ColNames;
+import com.planview.replicator2.System.Configuration;
+import com.planview.replicator2.System.InternalConfig;
 
 public class XlUtils {
 	public static Debug d = new Debug(); // Use setLevel in your top level code

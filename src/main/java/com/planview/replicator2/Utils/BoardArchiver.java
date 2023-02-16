@@ -4,9 +4,8 @@ import java.util.Date;
 
 import org.json.JSONObject;
 
-import com.planview.replicator2.Debug;
-import com.planview.replicator2.InternalConfig;
-import com.planview.replicator2.leankit.Board;
+import com.planview.replicator2.Leankit.Board;
+import com.planview.replicator2.System.InternalConfig;
 
 /**
  * Board deleter needs to move the destination board away (if it exists)

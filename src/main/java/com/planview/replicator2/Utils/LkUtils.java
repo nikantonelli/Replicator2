@@ -8,21 +8,21 @@ import org.apache.commons.lang.ArrayUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.planview.replicator2.AccessConfig;
-import com.planview.replicator2.InternalConfig;
-import com.planview.replicator2.leankit.AccessCache;
-import com.planview.replicator2.leankit.Board;
-import com.planview.replicator2.leankit.BoardLevel;
-import com.planview.replicator2.leankit.BoardUser;
-import com.planview.replicator2.leankit.Card;
-import com.planview.replicator2.leankit.CardType;
-import com.planview.replicator2.leankit.CustomField;
-import com.planview.replicator2.leankit.CustomIcon;
-import com.planview.replicator2.leankit.Lane;
-import com.planview.replicator2.leankit.Layout;
-import com.planview.replicator2.leankit.LeanKitAccess;
-import com.planview.replicator2.leankit.Task;
-import com.planview.replicator2.leankit.User;
+import com.planview.replicator2.Leankit.AccessCache;
+import com.planview.replicator2.Leankit.Board;
+import com.planview.replicator2.Leankit.BoardLevel;
+import com.planview.replicator2.Leankit.BoardUser;
+import com.planview.replicator2.Leankit.Card;
+import com.planview.replicator2.Leankit.CardType;
+import com.planview.replicator2.Leankit.CustomField;
+import com.planview.replicator2.Leankit.CustomIcon;
+import com.planview.replicator2.Leankit.Lane;
+import com.planview.replicator2.Leankit.Layout;
+import com.planview.replicator2.Leankit.LeanKitAccess;
+import com.planview.replicator2.Leankit.Task;
+import com.planview.replicator2.Leankit.User;
+import com.planview.replicator2.System.AccessConfig;
+import com.planview.replicator2.System.InternalConfig;
 
 public class LkUtils {
 
@@ -32,7 +32,7 @@ public class LkUtils {
 	 */
 
 
-	public static Lane[] getLanesFromBoardName(InternalConfig iCfg, AccessConfig accessCfg, String brdName) {
+	public static Lane[] getLanesFromBoardTitle(InternalConfig iCfg, AccessConfig accessCfg, String brdName) {
 		Lane[] lanes = {};
 		Board brd = null;
 		AccessCache cache = accessCfg.getCache();
@@ -60,7 +60,7 @@ public class LkUtils {
 
 		Lane[] lanes = null;
 
-		lanes = getLanesFromBoardName(iCfg, accessCfg, accessCfg.getBoardName());
+		lanes = getLanesFromBoardTitle(iCfg, accessCfg, accessCfg.getBoardName());
 		return getLanePathFromLanes(lanes, laneId);
 	}
 

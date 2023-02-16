@@ -1,8 +1,7 @@
 package com.planview.replicator2.Utils;
 
-import com.planview.replicator2.Debug;
-import com.planview.replicator2.InternalConfig;
-import com.planview.replicator2.azure.AzureAccess;
+import com.planview.replicator2.Azure.AzureAccess;
+import com.planview.replicator2.System.InternalConfig;
 
 public class AzureDeleter {
 	InternalConfig config;

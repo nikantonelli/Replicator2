@@ -11,17 +11,16 @@ import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.json.JSONObject;
 
-import com.planview.replicator2.ChangesColumns;
-import com.planview.replicator2.ColNames;
-import com.planview.replicator2.Debug;
-import com.planview.replicator2.InternalConfig;
-import com.planview.replicator2.SupportedXlsxFields;
-import com.planview.replicator2.leankit.Board;
-import com.planview.replicator2.leankit.BoardUser;
-import com.planview.replicator2.leankit.Card;
-import com.planview.replicator2.leankit.CustomField;
-import com.planview.replicator2.leankit.CustomIcon;
-import com.planview.replicator2.leankit.Lane;
+import com.planview.replicator2.Leankit.Board;
+import com.planview.replicator2.Leankit.BoardUser;
+import com.planview.replicator2.Leankit.Card;
+import com.planview.replicator2.Leankit.CustomField;
+import com.planview.replicator2.Leankit.CustomIcon;
+import com.planview.replicator2.Leankit.Lane;
+import com.planview.replicator2.System.ChangesColumns;
+import com.planview.replicator2.System.ColNames;
+import com.planview.replicator2.System.InternalConfig;
+import com.planview.replicator2.System.SupportedXlsxFields;
 
 public class Importer {
 	Debug d = new Debug();

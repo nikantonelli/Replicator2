@@ -1,8 +1,7 @@
 package com.planview.replicator2.Utils;
 
-import com.planview.replicator2.Debug;
-import com.planview.replicator2.InternalConfig;
-import com.planview.replicator2.leankit.Board;
+import com.planview.replicator2.Leankit.Board;
+import com.planview.replicator2.System.InternalConfig;
 
 public class BoardDeleter {
 	Debug d = new Debug();

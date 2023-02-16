@@ -1,8 +1,8 @@
-package com.planview.replicator2.jira;
+package com.planview.replicator2.Jira;
 
-import com.planview.replicator2.AccessConfig;
-import com.planview.replicator2.Debug;
 import com.planview.replicator2.Network.NetworkAccess;
+import com.planview.replicator2.System.AccessConfig;
+import com.planview.replicator2.Utils.Debug;
 
 public class JiraAccess  extends NetworkAccess {
 	Debug d = new Debug();

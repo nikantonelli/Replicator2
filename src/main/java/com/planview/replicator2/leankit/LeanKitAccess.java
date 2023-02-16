@@ -1,4 +1,4 @@
-package com.planview.replicator2.leankit;
+package com.planview.replicator2.Leankit;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,10 +22,10 @@ import org.json.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.planview.replicator2.AccessConfig;
-import com.planview.replicator2.ColNames;
-import com.planview.replicator2.Debug;
 import com.planview.replicator2.Network.NetworkAccess;
+import com.planview.replicator2.System.AccessConfig;
+import com.planview.replicator2.System.ColNames;
+import com.planview.replicator2.Utils.Debug;
 
 public class LeanKitAccess extends NetworkAccess {
 

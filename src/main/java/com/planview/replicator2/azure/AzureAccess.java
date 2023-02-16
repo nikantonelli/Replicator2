@@ -1,11 +1,11 @@
-package com.planview.replicator2.azure;
+package com.planview.replicator2.Azure;
 
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicNameValuePair;
 
-import com.planview.replicator2.AccessConfig;
 import com.planview.replicator2.Network.NetworkAccess;
+import com.planview.replicator2.System.AccessConfig;
 
 public class AzureAccess extends NetworkAccess {
 	

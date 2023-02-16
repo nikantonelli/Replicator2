@@ -1,4 +1,4 @@
-package com.planview.replicator2.leankit;
+package com.planview.replicator2.Leankit;
 
 import java.util.ArrayList;
 import java.util.HashMap;

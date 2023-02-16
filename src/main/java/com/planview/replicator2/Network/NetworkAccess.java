@@ -30,8 +30,8 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import com.planview.replicator2.AccessConfig;
-import com.planview.replicator2.Debug;
+import com.planview.replicator2.System.AccessConfig;
+import com.planview.replicator2.Utils.Debug;
 
 public class NetworkAccess {
 	protected AccessConfig config = null;

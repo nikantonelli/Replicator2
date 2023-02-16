@@ -9,15 +9,14 @@ import org.json.JSONObject;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.planview.replicator2.Debug;
-import com.planview.replicator2.InternalConfig;
-import com.planview.replicator2.leankit.Board;
-import com.planview.replicator2.leankit.BoardLevel;
-import com.planview.replicator2.leankit.CardType;
-import com.planview.replicator2.leankit.CustomField;
-import com.planview.replicator2.leankit.CustomIcon;
-import com.planview.replicator2.leankit.Lane;
-import com.planview.replicator2.leankit.Layout;
+import com.planview.replicator2.Leankit.Board;
+import com.planview.replicator2.Leankit.BoardLevel;
+import com.planview.replicator2.Leankit.CardType;
+import com.planview.replicator2.Leankit.CustomField;
+import com.planview.replicator2.Leankit.CustomIcon;
+import com.planview.replicator2.Leankit.Lane;
+import com.planview.replicator2.Leankit.Layout;
+import com.planview.replicator2.System.InternalConfig;
 
 public class BoardCreator {
 	Debug d = new Debug();
@@ -295,7 +294,7 @@ public class BoardCreator {
 		 * 
 		 */
 
-		Lane[] srcLanes = LkUtils.getLanesFromBoardName(cfg, cfg.source, cfg.source.getBoardName());
+		Lane[] srcLanes = LkUtils.getLanesFromBoardTitle(cfg, cfg.source, cfg.source.getBoardName());
 		if (srcLanes != null) {
 			Layout newLayout = LkUtils.createLaneTree(srcLanes);
 			ObjectMapper om = new ObjectMapper();

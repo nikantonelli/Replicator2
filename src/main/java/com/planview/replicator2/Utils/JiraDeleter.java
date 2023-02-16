@@ -1,7 +1,6 @@
 package com.planview.replicator2.Utils;
-import com.planview.replicator2.Debug;
-import com.planview.replicator2.InternalConfig;
-import com.planview.replicator2.jira.JiraAccess;
+import com.planview.replicator2.Jira.JiraAccess;
+import com.planview.replicator2.System.InternalConfig;
 
 public class JiraDeleter {
 	InternalConfig config;

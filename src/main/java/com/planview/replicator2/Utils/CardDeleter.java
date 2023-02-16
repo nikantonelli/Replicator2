@@ -4,11 +4,10 @@ import java.util.ArrayList;
 
 import org.apache.commons.lang.ArrayUtils;
 
-import com.planview.replicator2.Debug;
-import com.planview.replicator2.InternalConfig;
-import com.planview.replicator2.leankit.Card;
-import com.planview.replicator2.leankit.ExternalLink;
-import com.planview.replicator2.leankit.LeanKitAccess;
+import com.planview.replicator2.Leankit.Card;
+import com.planview.replicator2.Leankit.ExternalLink;
+import com.planview.replicator2.Leankit.LeanKitAccess;
+import com.planview.replicator2.System.InternalConfig;
 
 public class CardDeleter {
 	private static final int MAX_ID_ARRAY_SIZE = 200;
