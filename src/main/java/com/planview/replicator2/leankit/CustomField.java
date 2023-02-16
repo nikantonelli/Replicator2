@@ -27,6 +27,15 @@ public class CustomField {
 	public void setId(String id) {
 		this.id = id;
 	}
+	public void setChoiceConfiguration(ChoiceConfig choiceConfiguration) {
+		this.choiceConfiguration = choiceConfiguration;
+	}
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
+	public void setCreatedBy(Date createdBy) {
+		this.createdBy = createdBy;
+	}
 	public String getType() {
 		return type;
 	}
@@ -60,19 +69,13 @@ public class CustomField {
 	public ChoiceConfig getChoiceConfiguration() {
 		return choiceConfiguration;
 	}
-	public void setChoiceConfiguration(ChoiceConfig choiceConfiguration) {
-		
-	}
+
 	public Date getCreatedOn() {
 		return createdOn;
 	}
-	public void setCreatedOn(Date createdOn) {
-		
-	}
+
 	public Date getCreatedBy() {
 		return createdBy;
 	}
-	public void setCreatedBy(Date createdBy) {
-		
-	}
+
 }

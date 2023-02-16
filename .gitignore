@@ -1,1 +1,14 @@
-target
+.vscode
+!target
+target/*
+!target/*.jar
+.settings
+.classpath
+.project
+attachments
+*.xlsx
+*.txt
+*.sql
+*.bat
+*.doc
+.gitignore

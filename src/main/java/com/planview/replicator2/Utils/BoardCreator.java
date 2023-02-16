@@ -78,7 +78,7 @@ public class BoardCreator {
 					cfg.destination.getBoardName());
 			return false;
 		} else {
-			d.p(Debug.INFO, "Board Available for update. id: %s, title: \"%s\"\n", dstBrd.id,
+			d.p(Debug.INFO, "Board Available for update on \"%s\". id: %s, title: \"%s\"\n", cfg.destination.getUrl(), dstBrd.id,
 					cfg.destination.getBoardName());
 		}
 		details.put("allowUsersToDeleteCards", srcBrd.allowUsersToDeleteCards);

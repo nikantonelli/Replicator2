@@ -868,7 +868,6 @@ public class LeanKitAccess extends NetworkAccess {
 		reqHdrs.clear();
 		String results = processRequest();
 		ObjectMapper om = new ObjectMapper();
-		om.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		try {
 			return om.readValue(results, CustomFieldResult.class);
 		} catch (JsonProcessingException e) {

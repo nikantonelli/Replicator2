@@ -39,12 +39,12 @@ public class NetworkAccess {
 	protected String reqUrl = null;
 	protected HttpEntity reqEnt = null;
 	protected Debug d = new Debug();
-	
+
 	PoolingHttpClientConnectionManager cm = null;
-	
+
 	protected ArrayList<BasicNameValuePair> reqHdrs = new ArrayList<>();
 	protected ArrayList<NameValuePair> reqParams = new ArrayList<>();
-	
+
 	protected void configCheck() {
 		// Check URL has a trailing '/' and remove
 		if (config.getUrl().endsWith("/")) {
@@ -71,7 +71,6 @@ public class NetworkAccess {
 		return null;
 	}
 
-
 	protected HttpEntity processRawRequest() {
 
 		// Deal with delays, retries and timeouts
@@ -85,7 +84,7 @@ public class NetworkAccess {
 		CloseableHttpResponse httpResponse = null;
 		HttpEntity result = null;
 		try {
-			
+
 			HttpRequestBase request = null;
 			switch (reqType) {
 				case "POST": {
@@ -99,13 +98,12 @@ public class NetworkAccess {
 					break;
 				}
 				case "DELETE": {
-					//This may be AP specific. If so, need to move out of here
+					// This may be AP specific. If so, need to move out of here
 					if (reqEnt != null) {
 						request = new HttpPost();
 						((HttpPost) request).setEntity(reqEnt);
-						request.addHeader("X-HTTP-Method-Override", "DELETE");	
-					}
-					else {
+						request.addHeader("X-HTTP-Method-Override", "DELETE");
+					} else {
 						request = new HttpDelete();
 					}
 					break;
@@ -123,15 +121,16 @@ public class NetworkAccess {
 
 			for (int i = 0; i < reqHdrs.size(); i++) {
 				request.addHeader(reqHdrs.get(i).getName(), reqHdrs.get(i).getValue());
-				d.p(Debug.VERBOSE, "Adding Header \"%s\" as \"%s\"\n", reqHdrs.get(i).getName(), reqHdrs.get(i).getValue());
+				d.p(Debug.VERBOSE, "Adding Header \"%s\" as \"%s\"\n", reqHdrs.get(i).getName(),
+						reqHdrs.get(i).getValue());
 			}
 			// Add the user credentials to the request
-			if ((config.getApiKey() != null) && (config.getUser() == null)){
-				//Standard API key handling
+			if ((config.getApiKey() != null) && (config.getUser() == null)) {
+				// Standard API key handling
 				request.addHeader("Authorization", "Bearer " + config.getApiKey());
 				d.p(Debug.VERBOSE, "Adding Bearer starting with \"%s...\"\n", config.getApiKey().substring(0, 5));
-			} else if ((config.getApiKey() != null) && (config.getUser() != null)){
-				//ADO TOKEN handling
+			} else if ((config.getApiKey() != null) && (config.getUser() != null)) {
+				// ADO TOKEN handling
 				String token = config.getUser() + ":" + config.getApiKey();
 				token = Base64.getEncoder().encodeToString(token.getBytes());
 				request.addHeader("Authorization", "Basic " + token);
@@ -150,8 +149,8 @@ public class NetworkAccess {
 			}
 			request.setURI(new URI(config.getUrl() + reqUrl + bldr));
 			d.p(Debug.VERBOSE, "%s\n", request.toString());
-			if (reqEnt != null) { 
-				d.p(Debug.VERBOSE, "Content: %s\n",IOUtils.toString(reqEnt.getContent(), "UTF-8")); 
+			if (reqEnt != null) {
+				d.p(Debug.VERBOSE, "Content: %s\n", IOUtils.toString(reqEnt.getContent(), "UTF-8"));
 			}
 			httpResponse = client.execute(request);
 			d.p(Debug.VERBOSE, "%s\n", httpResponse.getStatusLine());
@@ -167,7 +166,7 @@ public class NetworkAccess {
 				}
 				case 204: // No response expected. but return affirmative
 				{
-					
+
 					break;
 				}
 				case 400: {
@@ -187,7 +186,8 @@ public class NetworkAccess {
 					break;
 				}
 				case 429: { // Flow control
-					LocalDateTime retryAfter = LocalDateTime.parse(httpResponse.getFirstHeader("retry-after").getValue(),
+					LocalDateTime retryAfter = LocalDateTime.parse(
+							httpResponse.getFirstHeader("retry-after").getValue(),
 							DateTimeFormatter.RFC_1123_DATE_TIME);
 					LocalDateTime serverTime = LocalDateTime.parse(httpResponse.getFirstHeader("date").getValue(),
 							DateTimeFormatter.RFC_1123_DATE_TIME);
@@ -244,7 +244,13 @@ public class NetworkAccess {
 			}
 		} catch (IOException e) {
 			d.p(Debug.ERROR, "(L3) %s\n", e.getMessage());
-			return null;
+			try {
+				EntityUtils.consumeQuietly(httpResponse.getEntity());
+				TimeUnit.MILLISECONDS.sleep(5000);
+			} catch (InterruptedException e1) {
+
+			}
+			return processRawRequest();
 		} catch (URISyntaxException e1) {
 			// Should never happen, but to keep the compiler happy.....
 			e1.printStackTrace();

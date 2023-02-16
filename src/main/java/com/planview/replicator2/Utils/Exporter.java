@@ -445,10 +445,11 @@ public class Exporter {
 						if (fv != null) {
 							ExternalLink[] extlnks = (ExternalLink[]) fv;
 							if ((extlnks.length > 0) && (extlnks[0].url != null)) {
-								if ((extlnks[0].label != null) && (extlnks[0].url != null) && (extlnks[0].url.length() != 0)) {
+								if ((extlnks[0].label != null) && (extlnks[0].url != null)
+										&& (extlnks[0].url.length() != 0)) {
 									iRow.createCell(fieldCounter, CellType.STRING)
 											.setCellValue(extlnks[0].label.replace(",", " ") + "," + extlnks[0].url);
-								} 
+								}
 							}
 						}
 						fieldCounter++;
@@ -525,7 +526,8 @@ public class Exporter {
 								// Increment the row index ready for the item row create
 								itmRow++;
 								createChangeRow(chgRow, item, "Modify", "Task",
-										"='" + XlUtils.validateSheetName(cfg.source.getBoardName()) + "'!A" + (itmRow + 1));
+										"='" + XlUtils.validateSheetName(cfg.source.getBoardName()) + "'!A"
+												+ (itmRow + 1));
 
 								// Now create the item row itself
 								// Changes changesMade = new Changes(0,0); //Testing!
@@ -622,7 +624,6 @@ public class Exporter {
 										case "number": {
 											Double number = Double.parseDouble((String) foundField.value);
 											iRow.createCell(fieldCounter, CellType.NUMERIC)
-//													.setCellValue(Integer.parseInt((String) foundField.value));
 													.setCellValue(number);
 											break;
 										}
