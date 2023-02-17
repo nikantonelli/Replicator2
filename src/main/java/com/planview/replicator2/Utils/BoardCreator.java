@@ -157,7 +157,7 @@ public class BoardCreator {
 				}
 				if (!matched) {
 					LkUtils.createCustomIcon(cfg, cfg.destination, srcIcons[i]);
-					d.p(Debug.WARN, "Creating Icon %s on %s\n", srcIcons[i].name, cfg.destination.getBoardName());
+					d.p(Debug.INFO, "Creating Icon %s on %s\n", srcIcons[i].name, cfg.destination.getBoardName());
 				}
 			}
 		} else {
