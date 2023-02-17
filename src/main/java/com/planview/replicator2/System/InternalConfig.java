@@ -43,11 +43,11 @@ public class InternalConfig {
 	public AccessConfig ado = new AccessConfig();
 
     public Integer   debugLevel = -1;
-    public boolean   exportArchived = false;
-    public boolean   exportTasks = false;
-    public boolean   exportAttachments = false;
-    public boolean   exportComments = false;
-    public boolean   addComment = false;
+    public Boolean   exportArchived = false;
+    public Boolean   exportTasks = false;
+    public Boolean   exportAttachments = false;
+    public Boolean   exportComments = false;
+    public Boolean   addComment = false;
     public Boolean   dualFlow = false;
     public XSSFSheet changesSheet = null;
     public XSSFSheet itemSheet = null;
@@ -55,19 +55,19 @@ public class InternalConfig {
     public XSSFSheet replaySheet;
 
 	public Integer  group = 0;
-	public boolean  exporter = false;
-	public boolean  importer = false;
-	public boolean  obliterate = false;
-	public boolean  remakeBoard = false;
-	public boolean  updateLayout = false;
-	public boolean  deleteCards = false;
-	public boolean  eraseBoard = false;
-	public boolean  ignoreCards;
+	public Boolean  exporter = false;
+	public Boolean  importer = false;
+	public Boolean  obliterate = false;
+	public Boolean  remakeBoard = false;
+	public Boolean  updateLayout = false;
+	public Boolean  deleteCards = false;
+	public Boolean  eraseBoard = false;
+	public Boolean  ignoreCards = false;
 	public String[] ignTypes;
-	public boolean  nameExtension;
+	public Boolean  nameExtension = false;
 	public String   extension;
 	public String oldExtension;
-	public boolean tasktop;
-	public boolean updateLevels;
+	public Boolean tasktop = false;
+	public Boolean updateLevels = false;
 }
 

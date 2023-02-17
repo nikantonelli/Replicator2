@@ -141,7 +141,7 @@ public class BoardCreator {
 			Integer matchedIcons = 0;
 			Integer[] unMatched = {};
 			for (int i = 0; i < srcIcons.length; i++) {
-				boolean matched = false;
+				Boolean matched = false;
 				// If we have them, check to see if it is the same name ('unique' identifier on
 				// LK)
 				if (dstIcons != null) {

@@ -264,7 +264,7 @@ public class Exporter {
 				}
 				String letter = CellReference.convertNumToColString(i);
 				Cell targetCell = row.getCell(XlUtils.findColumnFromName(iFirst, fieldName));
-				boolean writeItOut = true;
+				Boolean writeItOut = true;
 				if (targetCell == null) {
 					writeItOut = false;
 				} else {
@@ -304,7 +304,7 @@ public class Exporter {
 					String type = cfg.itemSheet.getRow(childRow)
 							.getCell(XlUtils.findColumnFromName(cfg.itemSheet.getRow(0), ColNames.TYPE))
 							.getStringCellValue();
-					boolean runAction = XlUtils.notIgnoreType(cfg, type);
+					Boolean runAction = XlUtils.notIgnoreType(cfg, type);
 
 					if (runAction) {
 						Integer col = XlUtils.findColumnFromSheet(cfg.itemSheet, ColNames.TITLE);

@@ -964,4 +964,13 @@ public class LeanKitAccess extends NetworkAccess {
 		return execute(Lane.class);
 	}
 
+	public String updateBoardUsers(JSONObject js) {
+		reqType = "POST";
+		reqUrl = "/io/board/access";
+		reqParams.clear();
+		reqHdrs.clear();
+		reqEnt = new StringEntity(js.toString(), "UTF-8");
+		return execute(String.class);
+	}
+
 }

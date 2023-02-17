@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.CellValue;
@@ -25,6 +26,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.planview.replicator2.Leankit.Board;
+import com.planview.replicator2.Leankit.BoardBulkAccessId;
 import com.planview.replicator2.Leankit.BoardUser;
 import com.planview.replicator2.Leankit.Card;
 import com.planview.replicator2.Leankit.CardType;
@@ -45,9 +48,9 @@ public class XlUtils {
 	 * First put all the spreadsheet related routines here:
 	 */
 
-	public static boolean notIgnoreType(InternalConfig cfg, String type) {
+	public static Boolean notIgnoreType(InternalConfig cfg, String type) {
 		// Demo reset use
-		boolean runAction = true;
+		Boolean runAction = true;
 		if (cfg.ignTypes != null) {
 			for (int i = 0; i < cfg.ignTypes.length; i++) {
 				if (type != null) {
@@ -504,7 +507,8 @@ public class XlUtils {
 
 							if (usersList != null) {
 								String[] users = usersList.split(",");
-								ArrayList<String> usersToPut = new ArrayList<>();
+								ArrayList<String> usersToPut = new ArrayList<String>();
+								String usernames = "";
 								for (int i = 0; i < users.length; i++) {
 									User realUser = LkUtils.getUserByName(cfg, accessCfg, users[i]);
 									if (realUser != null) {
@@ -512,6 +516,7 @@ public class XlUtils {
 										for (int j = 0; j < boardUsers.size(); j++) {
 											if (realUser.id.equals(boardUsers.get(j).userId)) {
 												usersToPut.add(realUser.id);
+												usernames += (i != 0)?",":"" + users[i] ;
 											}
 										}
 									} else {
@@ -520,6 +525,15 @@ public class XlUtils {
 									}
 								}
 								if (usersToPut.size() > 0) {
+									Board brd = LkUtils.getBoardByTitle(cfg, accessCfg);
+									BoardBulkAccessId bba = new BoardBulkAccessId();
+									String[] bids = {};
+									bba.boardIds = (String[]) ArrayUtils.add(bids, brd.id);
+									bba.userIds = usersToPut.toArray(new String[0]);
+									bba.boardRole = "boardUser";
+								
+									d.p(Debug.INFO, "Adding users \"%s\" to board \"%s\"\n", usernames, brd.title);
+									LkUtils.updateBoardUsers(cfg, accessCfg, bba);
 									flds.put("assignedUserIds", usersToPut.toArray());
 								}
 							}

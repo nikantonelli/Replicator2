@@ -91,7 +91,6 @@ public class Main {
 
 				config.source.setCache(new AccessCache());
 				config.destination.setCache(new AccessCache());
-				config.group = 0;
 				if (config.exporter || config.obliterate) {
 					// 2 & 3 (Exporter does check for board)
 					Exporter exp = new Exporter(config);
@@ -186,6 +185,10 @@ public class Main {
 		layoutOpt.setRequired(false);
 		cmdOpts.addOption(layoutOpt);
 
+		Option groupOpt = new Option("g", "group", true, "Identifier of group to process (if present)");
+		groupOpt.setRequired(false);
+		cmdOpts.addOption(groupOpt);
+
 		Option lvlOpt = new Option("v", "level", true, "Update levels on target system");
 		lvlOpt.setRequired(false);
 		cmdOpts.addOption(lvlOpt);
@@ -240,6 +243,10 @@ public class Main {
 		}
 
 		config.xlsxfn = cmdLn.getOptionValue("filename");
+
+		if (cmdLn.hasOption("group")) {
+			config.group = Integer.parseInt(cmdLn.getOptionValue("group"));
+		}
 
 		// Do the exports
 		if (cmdLn.hasOption("export")) {

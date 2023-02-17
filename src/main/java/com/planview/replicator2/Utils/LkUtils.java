@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 import com.planview.replicator2.Leankit.AccessCache;
 import com.planview.replicator2.Leankit.Board;
+import com.planview.replicator2.Leankit.BoardBulkAccessId;
 import com.planview.replicator2.Leankit.BoardLevel;
 import com.planview.replicator2.Leankit.BoardUser;
 import com.planview.replicator2.Leankit.Card;
@@ -316,7 +317,7 @@ public class LkUtils {
 		return null;
 	}
 
-	public static boolean removeCardTypeFromBoard(InternalConfig iCfg, AccessConfig accessCfg, CardType cardType) {
+	public static Boolean removeCardTypeFromBoard(InternalConfig iCfg, AccessConfig accessCfg, CardType cardType) {
 		Board brd = getBoardByTitle(iCfg, accessCfg);
 		if (brd != null) {
 			LeanKitAccess lka = new LeanKitAccess(accessCfg, iCfg.debugLevel);
@@ -410,7 +411,7 @@ public class LkUtils {
 		lka.archiveBoard(boardId);
 	}
 
-	public static boolean deleteBoard(InternalConfig iCfg, AccessConfig accessCfg) {
+	public static Boolean deleteBoard(InternalConfig iCfg, AccessConfig accessCfg) {
 		Board brd = getBoardByTitle(iCfg, accessCfg);
 		if (brd != null) {
 			deleteBoardById(iCfg, accessCfg, brd.id);
@@ -962,6 +963,12 @@ public class LkUtils {
 			}
 		}
 		return tree;
+	}
+
+	public static void updateBoardUsers(InternalConfig cfg, AccessConfig accessCfg, BoardBulkAccessId bba) {
+		LeanKitAccess lka = new LeanKitAccess(accessCfg, cfg.debugLevel);
+		JSONObject js = new JSONObject(bba);
+		lka.updateBoardUsers( js);
 	}
 
 }

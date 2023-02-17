@@ -149,7 +149,7 @@ public class Importer {
 				}
 			}
 			String id = null;
-			boolean runAction = XlUtils.notIgnoreType(cfg, item.getCell(typeCol).getStringCellValue());
+			Boolean runAction = XlUtils.notIgnoreType(cfg, item.getCell(typeCol).getStringCellValue());
 			String action = change.getCell(cc.action).getStringCellValue();
 			if (action.equals("Create")) {
 
