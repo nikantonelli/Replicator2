@@ -253,6 +253,9 @@ public class BoardCreator {
 		CardType srcTaskType = null;
 		for (int i = 0; i < srcTypes.size(); i++) {
 			CardType ct = srcTypes.get(i);
+			if ((ct.getName().equals(dstCardType.getName())) || (ct.getName().equals(dstTaskType.getName()))) {
+				continue;
+			}
 			if (ct.getIsDefault() == true) {
 				srcCardType = ct;
 			} else if (ct.getIsDefaultTaskType() == true) {
