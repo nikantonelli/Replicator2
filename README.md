@@ -20,9 +20,9 @@ Option | Argument | Description
 -r |  | (r)emake target boards by archiving old and adding new (if present, you can use -R first if needed)
 -R |  | (R)emove target boards completely (delete)
 -l |  | Replace (l)ayout on target board 
+-t |  | Follow external links from (t)asktop integration to Jira or ADO and delete pair
 -v |  | (BEWARE!) change le(v)els on target system to match source system. Used in conjunction with -l or -r, not independently.
 -d |  | (d)elete all cards on the target boards
--F |  | Do all things needed for a (F)resh set of target boards
 -c |  | Look for column "Import Ignore" for (c)omma separated list of types to treat in a special way on export/import
 -O |  | Include _Older_ archived items during export
 -A |  | Include _Attachments_ in export/import - these get placed in your current working directory 

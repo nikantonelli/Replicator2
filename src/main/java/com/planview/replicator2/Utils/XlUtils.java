@@ -127,7 +127,7 @@ public class XlUtils {
 
 	public static String validateSheetName(String longSheetName) {
 		String shortName = longSheetName.replaceAll("[^a-zA-Z0-9_]", "_");
-		if (longSheetName.length() > 32) {
+		if (longSheetName.length() >= 32) {
 			shortName = longSheetName.substring(0, 15) + ".." + longSheetName.substring(longSheetName.length() - 14);
 		}
 		return shortName;

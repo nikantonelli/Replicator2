@@ -245,7 +245,9 @@ public class NetworkAccess {
 		} catch (IOException e) {
 			d.p(Debug.ERROR, "(L3) %s\n", e.getMessage());
 			try {
-				EntityUtils.consumeQuietly(httpResponse.getEntity());
+				if (httpResponse != null) {
+					EntityUtils.consumeQuietly(httpResponse.getEntity());
+				}
 				TimeUnit.MILLISECONDS.sleep(5000);
 			} catch (InterruptedException e1) {
 
