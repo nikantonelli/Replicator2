@@ -65,6 +65,7 @@ public class XlUtils {
 
 	public static InternalConfig setConfig(InternalConfig config, Row row, HashMap<String, Integer> fieldMap) {
 
+		d.setLevel(config.debugLevel);
 		if (config.nameExtension) {
 			NumberFormat nf = DecimalFormat.getInstance();
 			nf.setMaximumFractionDigits(0);
