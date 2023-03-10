@@ -91,7 +91,7 @@ public class Main {
 
 				config.source.setCache(new AccessCache());
 				config.destination.setCache(new AccessCache());
-				if (config.exporter || config.obliterate) {
+				if (config.exporter ) {
 					// 2 & 3 (Exporter does check for board)
 					Exporter exp = new Exporter(config);
 					exp.go();
@@ -99,12 +99,12 @@ public class Main {
 
 				// Now we need to check/reset the destination board if needed
 
-				if ((config.deleteCards || config.obliterate) && !config.remakeBoard) {
+				if ((config.deleteCards || config.deleteXlsx) && !config.remakeBoard) {
 					CardDeleter cd = new CardDeleter(config);
 					cd.go();
 				}
 
-				if ((config.remakeBoard && !config.eraseBoard) || config.obliterate) {
+				if ((config.remakeBoard && !config.eraseBoard)) {
 					BoardArchiver ba = new BoardArchiver(config);
 					ba.go();
 				}
@@ -169,13 +169,13 @@ public class Main {
 		removeOpt.setRequired(false);
 		cmdOpts.addOption(removeOpt);
 
+		Option deleteOpt = new Option("X", "xlsx", false, "Delete cards on target boards (from spreadsheet)");
+		deleteOpt.setRequired(false);
+		cmdOpts.addOption(deleteOpt);
+
 		Option eraseOpt = new Option("d", "delete", false, "Delete cards on target boards");
 		eraseOpt.setRequired(false);
 		cmdOpts.addOption(eraseOpt);
-
-		Option askOpt = new Option("F", "fresh", false, "Fresh Start of all steps and changes needed");
-		askOpt.setRequired(false);
-		cmdOpts.addOption(askOpt);
 
 		Option tasktopOpt = new Option("t", "tasktop", false, "Follow External Links to delete remote artifacts");
 		tasktopOpt.setRequired(false);
@@ -244,6 +244,11 @@ public class Main {
 
 		config.xlsxfn = cmdLn.getOptionValue("filename");
 
+		if (cmdLn.hasOption("xlsx")) {
+			config.deleteXlsx = true;
+		}
+
+
 		if (cmdLn.hasOption("group")) {
 			config.group = Integer.parseInt(cmdLn.getOptionValue("group"));
 		}
@@ -276,11 +281,6 @@ public class Main {
 		}
 		if (cmdLn.hasOption("origin")) {
 			config.addComment = true;
-		}
-
-		// Option to push through all work regardless
-		if (cmdLn.hasOption("fresh")) {
-			config.obliterate = true;
 		}
 
 		// Archive the destination board

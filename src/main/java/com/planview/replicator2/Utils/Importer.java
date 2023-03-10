@@ -138,12 +138,12 @@ public class Importer {
 			}
 			String field = change.getCell(cc.field).getStringCellValue();
 			// Check import requirements against command line
-			if (change.getCell(cc.action).getStringCellValue() == "Modify") {
+			if (change.getCell(cc.action).getStringCellValue().equals("Modify")) {
 				if (((field == "attachments") && !cfg.exportAttachments)
 						|| ((field == "Task") && !cfg.exportTasks)
 						|| ((field == "comments") && !cfg.exportComments)) {
-					d.p(Debug.WARN, "Ignoring action \"%s\" on item \"%s\", not set to import %s\n",
-							change.getCell(cc.action).getStringCellValue(), item.getCell(titleCol).getStringCellValue(),
+					d.p(Debug.WARN, "Ignoring action \"Modify\" on item \"%s\", not set to import %s\n",
+							item.getCell(titleCol).getStringCellValue(),
 							field);
 					continue; // Break out and try next change
 				}

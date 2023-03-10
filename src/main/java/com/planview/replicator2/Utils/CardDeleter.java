@@ -20,8 +20,13 @@ public class CardDeleter {
 	}
 
 	public void go() {
-		ArrayList<Card> cards = LkUtils.getCardIdsFromBoard(cfg, cfg.destination);
+		ArrayList<Card> cards = null;
 
+		if (!cfg.deleteXlsx) {
+			cards = LkUtils.getCardsFromBoard(cfg, cfg.destination);
+		} else {
+			cards = XlUtils.getDstCards(cfg);
+		}
 		String[] adoDeletes = {};
 		String[] jiraDeletes = {};
 		String[] apDeletes = {};
@@ -31,6 +36,7 @@ public class CardDeleter {
 		for (int i = 0; i < cards.size(); i++) {
 			apDeletes = (String[]) ArrayUtils.add(apDeletes, cards.get(i).id);
 			ExternalLink[] extUrls = cards.get(i).externalLinks;
+			if (extUrls != null){
 			for (int j = 0; j < extUrls.length; j++) {
 				String url = extUrls[j].url;
 				if (url != null) {
@@ -50,6 +56,7 @@ public class CardDeleter {
 					}
 				}
 			}
+		}
 		}
 
 		if (cfg.tasktop) {

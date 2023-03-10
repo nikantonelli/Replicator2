@@ -48,9 +48,7 @@ public class BoardCreator {
 
 			if ((srcBrd != null) && (dstBrd == null)) {
 				dstBrd = LkUtils.duplicateBoard(cfg);
-				if (dstBrd != null) {
-					d.p(Debug.INFO, "Duplication of board. id: %s, title: \"%s\"\n", dstBrd.id, dstBrd.title);
-				} else {
+				if (dstBrd == null) {
 					d.p(Debug.ERROR, "Cannot duplicate locally from \"%s\" to \"%s\" ... skipping\n",
 							cfg.source.getBoardName(),
 							cfg.destination.getBoardName());
@@ -239,13 +237,13 @@ public class BoardCreator {
 		if (dstCardType != null) {
 			CardType card = new CardType("Other Work");
 			card.setIsTaskType(false);
-			LkUtils.updateCardType(cfg, cfg.destination, dstCardType.getId(), card);
+			if (dstCardType != null) LkUtils.updateCardType(cfg, cfg.destination, dstCardType.getId(), card);
 		} else if (dstTaskType != null) {
 			CardType task = new CardType("Task");
 			task.setColorHex("#44ffff");
 			task.setIsCardType(false);
 			task.setIsTaskType(true);
-			LkUtils.updateCardType(cfg, cfg.destination, dstTaskType.getId(), task);
+			if (dstTaskType != null) LkUtils.updateCardType(cfg, cfg.destination, dstTaskType.getId(), task);
 		}
 
 		ArrayList<CardType> srcTypes = LkUtils.getCardTypesFromBoard(cfg, cfg.source);
@@ -273,12 +271,12 @@ public class BoardCreator {
 			card.setIsTaskType(false);
 			if (dstCardType != null)
 				LkUtils.updateCardType(cfg, cfg.destination, dstCardType.getId(), card);
-		} else if (dstTaskType != null) {
+		} else if (srcTaskType != null) {
 			CardType task = new CardType(srcTaskType.getName());
 			task.setColorHex(srcTaskType.getColorHex());
 			task.setIsCardType(false);
 			task.setIsTaskType(true);
-			LkUtils.updateCardType(cfg, cfg.destination, dstTaskType.getId(), task);
+			if (dstTaskType != null) LkUtils.updateCardType(cfg, cfg.destination, dstTaskType.getId(), task);
 		}
 		/**
 		 * 

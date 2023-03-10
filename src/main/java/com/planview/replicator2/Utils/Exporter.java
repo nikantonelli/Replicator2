@@ -189,7 +189,7 @@ public class Exporter {
 		/**
 		 * Read all the normal cards on the board - up to a limit?
 		 */
-		ArrayList<Card> cards = LkUtils.getCardIdsFromBoard(cfg, cfg.source);
+		ArrayList<Card> cards = LkUtils.getCardsFromBoard(cfg, cfg.source);
 		if (cards == null) {
 			d.p(Debug.ERROR, "Cannot identify cards on board: \"%s\"", cfg.source.getBoardName());
 			System.exit(4);

@@ -66,6 +66,7 @@ public class XlUtils {
 	public static InternalConfig setConfig(InternalConfig config, Row row, HashMap<String, Integer> fieldMap) {
 
 		d.setLevel(config.debugLevel);
+
 		if (config.nameExtension) {
 			NumberFormat nf = DecimalFormat.getInstance();
 			nf.setMaximumFractionDigits(0);
@@ -443,32 +444,6 @@ public class XlUtils {
 		}
 	}
 
-	// private static ArrayList<Lane> findLanesFromParentId(Lane[] lanes, String id)
-	// {
-	// ArrayList<Lane> ln = new ArrayList<>();
-	// for (int i = 0; i < lanes.length; i++) {
-	// if (lanes[i].parentLaneId != null) {
-	// if (lanes[i].parentLaneId.equals(id)) {
-	// ln.add(lanes[i]);
-	// }
-	// }
-	// }
-	// return ln;
-	// }
-
-	// private static ArrayList<String> getParentLaneIds( ArrayList<Lane> allLanes,
-	// ArrayList<Lane> lanes){
-	// ArrayList<String> foundName = new ArrayList<>();
-	// Iterator<Lane> lIter = lanes.iterator();
-	// while (lIter.hasNext()) {
-	// Lane lane = lIter.next();
-	// if (lane.name.equals(laneName)){
-	// foundName.add(findLaneFromId(allLanes, lane.parentLaneId);
-	// }
-	// }
-	// return foundName;
-	// }
-
 	/**
 	 * If cardId is null, we assume this is a card on a board If non-null, then this
 	 * is a task on a card
@@ -759,5 +734,30 @@ public class XlUtils {
 			}
 		}
 		return null;
+	}
+	
+	public static ArrayList<Card> getDstCards(InternalConfig cfg) {
+		ArrayList<Card> cards = new ArrayList<>();
+		XSSFSheet itemSht = cfg.wb.getSheet(XlUtils.validateSheetName(cfg.source.getBoardName()));
+		if (itemSht != null) {
+			Integer idCol = findColumnFromSheet(itemSht, ColNames.ID);
+			Integer titleCol = findColumnFromSheet(itemSht, ColNames.TITLE);
+
+			for (int rowIndex = 1; rowIndex <= itemSht.getLastRowNum(); rowIndex++) {
+				Row row = itemSht.getRow(rowIndex);
+				Cell idCell = row.getCell(idCol);
+				Cell titleCell = row.getCell(titleCol);
+				if ((idCell != null) && (titleCell != null)
+						&& (idCell.getCellType().equals(CellType.STRING))
+						&& (titleCell.getCellType().equals(CellType.STRING))) {
+					Card cd = new Card();
+					cd.setId(row.getCell(idCol).getStringCellValue());
+					cd.setTitle(row.getCell(titleCol).getStringCellValue());
+					cards.add(cd);
+				}
+			}
+		}
+
+		return cards;
 	}
 }

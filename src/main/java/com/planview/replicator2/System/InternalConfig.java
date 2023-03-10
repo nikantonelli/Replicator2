@@ -69,5 +69,6 @@ public class InternalConfig {
 	public String oldExtension;
 	public Boolean tasktop = false;
 	public Boolean updateLevels = false;
+	public Boolean deleteXlsx = false;
 }
 
