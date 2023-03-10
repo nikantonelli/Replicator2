@@ -234,40 +234,44 @@ public class BoardCreator {
 				LkUtils.removeCardTypeFromBoard(cfg, cfg.destination, ct);
 			}
 		}
-		if (dstCardType != null) {
-			CardType card = new CardType("Other Work");
-			card.setIsTaskType(false);
-			if (dstCardType != null) LkUtils.updateCardType(cfg, cfg.destination, dstCardType.getId(), card);
-		} else if (dstTaskType != null) {
-			CardType task = new CardType("Task");
-			task.setColorHex("#44ffff");
-			task.setIsCardType(false);
-			task.setIsTaskType(true);
-			if (dstTaskType != null) LkUtils.updateCardType(cfg, cfg.destination, dstTaskType.getId(), task);
-		}
+		// if (dstCardType != null) {
+		// 	CardType card = new CardType("Other Work");
+		// 	card.setIsTaskType(false);
+		// 	if (dstCardType != null) LkUtils.updateCardType(cfg, cfg.destination, dstCardType.getId(), card);
+		// } else if (dstTaskType != null) {
+		// 	CardType task = new CardType("Task");
+		// 	task.setColorHex("#44ffff");
+		// 	task.setIsCardType(false);
+		// 	task.setIsTaskType(true);
+		// 	if (dstTaskType != null) LkUtils.updateCardType(cfg, cfg.destination, dstTaskType.getId(), task);
+		// }
 
 		ArrayList<CardType> srcTypes = LkUtils.getCardTypesFromBoard(cfg, cfg.source);
 		CardType srcCardType = null;
 		CardType srcTaskType = null;
 		for (int i = 0; i < srcTypes.size(); i++) {
 			CardType ct = srcTypes.get(i);
-			if ((ct.getName().equals(dstCardType.getName())) || (ct.getName().equals(dstTaskType.getName()))) {
-				continue;
-			}
+			// if ((ct.getName().equals(dstCardType.getName())) || (ct.getName().equals(dstTaskType.getName()))) {
+			// 	continue;
+			// }
 			if (ct.getIsDefault() == true) {
 				srcCardType = ct;
+				srcTypes.remove(i);
 			} else if (ct.getIsDefaultTaskType() == true) {
 				srcTaskType = ct;
-			} else {
-				CardType card = new CardType(ct.getName());
-				card.setColorHex(ct.getColorHex());
-				LkUtils.addCardTypeToBoard(cfg, cfg.destination, card);
-			}
+				srcTypes.remove(i);
+			} 
+			// else {
+			// 	CardType card = new CardType(ct.getName());
+			// 	card.setColorHex(ct.getColorHex());
+			// 	LkUtils.addCardTypeToBoard(cfg, cfg.destination, card);
+			// }
 		}
 
 		if (srcCardType != null) {
 			CardType card = new CardType(srcCardType.getName());
 			card.setColorHex(srcCardType.getColorHex());
+			card.setIsCardType(true);
 			card.setIsTaskType(false);
 			if (dstCardType != null)
 				LkUtils.updateCardType(cfg, cfg.destination, dstCardType.getId(), card);
@@ -277,6 +281,15 @@ public class BoardCreator {
 			task.setIsCardType(false);
 			task.setIsTaskType(true);
 			if (dstTaskType != null) LkUtils.updateCardType(cfg, cfg.destination, dstTaskType.getId(), task);
+		}
+
+		for (int i = 0; i < srcTypes.size(); i++) {
+			CardType ct = srcTypes.get(i);
+			CardType card = new CardType(ct.getName());
+			card.setColorHex(ct.getColorHex());
+			card.setIsCardType(true);
+			card.setIsTaskType(false);
+			LkUtils.addCardTypeToBoard(cfg, cfg.destination, card);
 		}
 		/**
 		 * 
