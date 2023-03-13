@@ -3,7 +3,7 @@
 Not for public consumption. It is for a specific need within Planview to replicate demo environments
 
 ## Features
-* Works from the TITLES of cards and not the IDs. This means if you have two cards, or two boards, of the same name, it might not pick up the one you want. Use LKUtils if you need it to import/export by ID, but that can't do the same as this program in terms of making/resetting a target board
+* Works from the TITLES of cards and not the IDs. This means if you have two cards, or two boards, of the same name, it might not pick up the one you want. Use LKUtils if you need it to import/export by ID.
 * Will ignore card types (in a list in the config sheet column "Import Ignore") per replicate. This is useful for when there might be cards that come in from an external source, e.g. Portfolios that will need to be parented to child cards on other boards (see -c option)
 * Cards that come in from Portfolios can be moved to an apprropiate lane by adding "Modify" rows into the Changes sheets on a name/title basis (see -c option)
 * Can copy more than one board per run
