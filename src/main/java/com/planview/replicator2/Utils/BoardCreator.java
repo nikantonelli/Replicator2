@@ -76,7 +76,8 @@ public class BoardCreator {
 					cfg.destination.getBoardName());
 			return false;
 		} else {
-			d.p(Debug.INFO, "Board Available for update on \"%s\". id: %s, title: \"%s\"\n", cfg.destination.getUrl(), dstBrd.id,
+			d.p(Debug.INFO, "Board Available for update on \"%s\". id: %s, title: \"%s\"\n", cfg.destination.getUrl(),
+					dstBrd.id,
 					cfg.destination.getBoardName());
 		}
 		details.put("allowUsersToDeleteCards", srcBrd.allowUsersToDeleteCards);
@@ -228,68 +229,36 @@ public class BoardCreator {
 			CardType ct = dstTypes.get(i);
 			if (ct.getIsDefault() == true) {
 				dstCardType = ct;
+				CardType card = new CardType("_defaultCardType_");	//Have to move them away in case someone is using the name
+				card.setIsCardType(true);
+				card.setIsTaskType(false);
+				LkUtils.updateCardType(cfg, cfg.destination, dstCardType.getId(), card);
 			} else if (ct.getIsDefaultTaskType() == true) {
 				dstTaskType = ct;
+				CardType card = new CardType("_defaultTaskType_");	//Have to move them away in case someone is using the name
+				card.setIsCardType(false);
+				card.setIsTaskType(true);
+				LkUtils.updateCardType(cfg, cfg.destination, dstTaskType.getId(), card);
 			} else {
 				LkUtils.removeCardTypeFromBoard(cfg, cfg.destination, ct);
 			}
 		}
-		// if (dstCardType != null) {
-		// 	CardType card = new CardType("Other Work");
-		// 	card.setIsTaskType(false);
-		// 	if (dstCardType != null) LkUtils.updateCardType(cfg, cfg.destination, dstCardType.getId(), card);
-		// } else if (dstTaskType != null) {
-		// 	CardType task = new CardType("Task");
-		// 	task.setColorHex("#44ffff");
-		// 	task.setIsCardType(false);
-		// 	task.setIsTaskType(true);
-		// 	if (dstTaskType != null) LkUtils.updateCardType(cfg, cfg.destination, dstTaskType.getId(), task);
-		// }
 
 		ArrayList<CardType> srcTypes = LkUtils.getCardTypesFromBoard(cfg, cfg.source);
-		CardType srcCardType = null;
-		CardType srcTaskType = null;
-		for (int i = 0; i < srcTypes.size(); i++) {
-			CardType ct = srcTypes.get(i);
-			// if ((ct.getName().equals(dstCardType.getName())) || (ct.getName().equals(dstTaskType.getName()))) {
-			// 	continue;
-			// }
-			if (ct.getIsDefault() == true) {
-				srcCardType = ct;
-				srcTypes.remove(i);
-			} else if (ct.getIsDefaultTaskType() == true) {
-				srcTaskType = ct;
-				srcTypes.remove(i);
-			} 
-			// else {
-			// 	CardType card = new CardType(ct.getName());
-			// 	card.setColorHex(ct.getColorHex());
-			// 	LkUtils.addCardTypeToBoard(cfg, cfg.destination, card);
-			// }
-		}
-
-		if (srcCardType != null) {
-			CardType card = new CardType(srcCardType.getName());
-			card.setColorHex(srcCardType.getColorHex());
-			card.setIsCardType(true);
-			card.setIsTaskType(false);
-			if (dstCardType != null)
-				LkUtils.updateCardType(cfg, cfg.destination, dstCardType.getId(), card);
-		} else if (srcTaskType != null) {
-			CardType task = new CardType(srcTaskType.getName());
-			task.setColorHex(srcTaskType.getColorHex());
-			task.setIsCardType(false);
-			task.setIsTaskType(true);
-			if (dstTaskType != null) LkUtils.updateCardType(cfg, cfg.destination, dstTaskType.getId(), task);
-		}
-
 		for (int i = 0; i < srcTypes.size(); i++) {
 			CardType ct = srcTypes.get(i);
 			CardType card = new CardType(ct.getName());
 			card.setColorHex(ct.getColorHex());
-			card.setIsCardType(true);
-			card.setIsTaskType(false);
-			LkUtils.addCardTypeToBoard(cfg, cfg.destination, card);
+
+			if (ct.getIsDefault()) {
+				LkUtils.updateCardType(cfg, cfg.destination, dstCardType.getId(), card);
+			} else if (ct.getIsDefaultTaskType()) {
+				card.setIsCardType(false);
+				card.setIsTaskType(true);
+				LkUtils.updateCardType(cfg, cfg.destination, dstTaskType.getId(), card);
+			} else {
+				LkUtils.addCardTypeToBoard(cfg, cfg.destination, card);
+			}
 		}
 		/**
 		 * 

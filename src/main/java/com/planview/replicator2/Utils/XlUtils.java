@@ -84,14 +84,36 @@ public class XlUtils {
 			XSSFFormulaEvaluator.evaluateAllFormulaCells(config.wb);
 		}
 
-		config.source = new AccessConfig(
-				row.getCell(fieldMap.get(InternalConfig.SOURCE_URL_COLUMN)).getStringCellValue(),
-				row.getCell(fieldMap.get(InternalConfig.SOURCE_BOARDNAME_COLUMN)).getStringCellValue(),
-				row.getCell(fieldMap.get(InternalConfig.SOURCE_APIKEY_COLUMN)).getStringCellValue());
-		config.destination = new AccessConfig(
-				row.getCell(fieldMap.get(InternalConfig.DESTINATION_URL_COLUMN)).getStringCellValue(),
-				row.getCell(fieldMap.get(InternalConfig.DESTINATION_BOARDNAME_COLUMN)).getStringCellValue(),
-				row.getCell(fieldMap.get(InternalConfig.DESTINATION_APIKEY_COLUMN)).getStringCellValue());
+		Cell uc, bc, ac;
+		uc = row.getCell(fieldMap.get(InternalConfig.SOURCE_URL_COLUMN));
+		bc = row.getCell(fieldMap.get(InternalConfig.SOURCE_BOARDNAME_COLUMN));
+		ac = row.getCell(fieldMap.get(InternalConfig.SOURCE_APIKEY_COLUMN));
+
+		if ((uc == null) || (bc == null) || (ac == null)) {
+			return null;
+		}
+		String u,b,a;
+		u = uc.getStringCellValue();
+		b = bc.getStringCellValue();
+		a = ac.getStringCellValue();
+		if ((u.length() == 0) || (b.length() == 0) || (a.length() == 0)){	//Excel cell is there but empty
+			return null;
+		}
+		config.source = new AccessConfig(u, b, a);
+		uc = row.getCell(fieldMap.get(InternalConfig.DESTINATION_URL_COLUMN));
+		bc = row.getCell(fieldMap.get(InternalConfig.DESTINATION_BOARDNAME_COLUMN));
+		ac = row.getCell(fieldMap.get(InternalConfig.DESTINATION_APIKEY_COLUMN));
+
+		if ((uc == null) || (bc == null) || (ac == null)) {
+			return null;
+		}
+		u = uc.getStringCellValue();
+		b = bc.getStringCellValue();
+		a = ac.getStringCellValue();
+		if ((u.length() == 0) || (b.length() == 0) || (a.length() == 0)){	//Excel cell is there but empty
+			return null;
+		}
+		config.destination = new AccessConfig(u, b, a);
 
 		if (config.tasktop) {
 			config.jira = new AccessConfig(
