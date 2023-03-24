@@ -454,7 +454,7 @@ public class XlUtils {
 			then.add(Calendar.SECOND, 5);
 			Long timeDiff = then.getTimeInMillis() - now.getTimeInMillis();
 			if (donePrint) {
-				d.p(Debug.WARN, "File \"%s\" in use. Please close to let this program continue\n", xlsxfn);
+				d.p(Debug.ALWAYS, "File \"%s\" in use. Please close to let this program continue\n", xlsxfn);
 				donePrint = false;
 			}
 			try {

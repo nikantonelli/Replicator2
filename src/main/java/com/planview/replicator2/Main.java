@@ -192,7 +192,7 @@ public class Main {
 		groupOpt.setRequired(false);
 		cmdOpts.addOption(groupOpt);
 
-		Option lvlOpt = new Option("v", "level", true, "Update levels on target system");
+		Option lvlOpt = new Option("v", "level", false, "Update levels on target system");
 		lvlOpt.setRequired(false);
 		cmdOpts.addOption(lvlOpt);
 
