@@ -94,7 +94,7 @@ public class BoardCreator {
 		ArrayList<BoardLevel> dstLevels = LkUtils.getBoardLevels(cfg, cfg.destination);
 
 		int gotDstLevels = 0;
-		for (int i = 0; i < srcLevels.size(); i++) {
+		for (int i = 0; (i < srcLevels.size()) && (i < dstLevels.size()); i++) {
 			if (srcLevels.get(i).label.equals(dstLevels.get(i).label)) {
 				gotDstLevels += 1;
 			}
