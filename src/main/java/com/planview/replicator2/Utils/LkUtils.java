@@ -288,7 +288,7 @@ public class LkUtils {
 		}
 		if (brd != null) {
 			cd = lka.fetchCardByTitle(brd.id, title);
-			if (cache != null) {
+			if ((cd != null) && (cache != null)) {
 				cache.setCard(cd);
 			}
 		}
