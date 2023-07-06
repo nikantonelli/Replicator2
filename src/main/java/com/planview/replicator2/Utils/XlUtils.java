@@ -66,23 +66,30 @@ public class XlUtils {
 	public static InternalConfig setConfig(InternalConfig config, Row row, HashMap<String, Integer> fieldMap) {
 
 		d.setLevel(config.debugLevel);
-		
-		config.validConfig = true;	//Reset prior to the tests below
+
+		config.validConfig = true; // Reset prior to the tests below
 
 		if (config.nameExtension) {
 			NumberFormat nf = DecimalFormat.getInstance();
 			nf.setMaximumFractionDigits(0);
-			switch (row.getCell(fieldMap.get(InternalConfig.DESTINATION_TID_COLUMN)).getCellType()){
+			Cell cell = row.getCell(fieldMap.get(InternalConfig.DESTINATION_TID_COLUMN));
+			if (cell == null) {
+				config.validConfig = false;
+				return config;
+			}
+			switch (cell.getCellType()) {
 				case NUMERIC: {
-					config.oldExtension = nf.format(row.getCell(fieldMap.get(InternalConfig.DESTINATION_TID_COLUMN)).getNumericCellValue());
+					config.oldExtension = nf.format(
+							cell.getNumericCellValue());
 					break;
 				}
 				default: {
-					config.oldExtension = row.getCell(fieldMap.get(InternalConfig.DESTINATION_TID_COLUMN)).getStringCellValue();
+					config.oldExtension = cell
+							.getStringCellValue();
 				}
 			}
-			
-			row.getCell(fieldMap.get(InternalConfig.DESTINATION_TID_COLUMN)).setCellValue(config.extension);
+
+			cell.setCellValue(config.extension);
 			XSSFFormulaEvaluator.evaluateAllFormulaCells(config.wb);
 		}
 
@@ -95,11 +102,11 @@ public class XlUtils {
 			config.validConfig = false;
 			return config;
 		}
-		String u,b,a;
+		String u, b, a;
 		u = uc.getStringCellValue();
 		b = bc.getStringCellValue();
 		a = ac.getStringCellValue();
-		if ((u.length() == 0) || (b.length() == 0) || (a.length() == 0)){	//Excel cell is there but empty
+		if ((u.length() == 0) || (b.length() == 0) || (a.length() == 0)) { // Excel cell is there but empty
 			config.validConfig = false;
 			return config;
 		}
@@ -115,7 +122,7 @@ public class XlUtils {
 		u = uc.getStringCellValue();
 		b = bc.getStringCellValue();
 		a = ac.getStringCellValue();
-		if ((u.length() == 0) || (b.length() == 0) || (a.length() == 0)){	//Excel cell is there but empty
+		if ((u.length() == 0) || (b.length() == 0) || (a.length() == 0)) { // Excel cell is there but empty
 			config.validConfig = false;
 			return config;
 		}
@@ -123,15 +130,23 @@ public class XlUtils {
 
 		if (config.tasktop) {
 			config.jira = new AccessConfig(
-				"", //URL is fully encoded into externalLink
-				null, //BoardName not relevant
-				row.getCell(fieldMap.get(InternalConfig.DESTINATION_JIRA_KEY)) != null ? row.getCell(fieldMap.get(InternalConfig.DESTINATION_JIRA_KEY)).getStringCellValue():null);
-			config.jira.setUser(row.getCell(fieldMap.get(InternalConfig.DESTINATION_JIRA_USER)) != null ? row.getCell(fieldMap.get(InternalConfig.DESTINATION_JIRA_USER)).getStringCellValue():null);
+					"", // URL is fully encoded into externalLink
+					null, // BoardName not relevant
+					row.getCell(fieldMap.get(InternalConfig.DESTINATION_JIRA_KEY)) != null
+							? row.getCell(fieldMap.get(InternalConfig.DESTINATION_JIRA_KEY)).getStringCellValue()
+							: null);
+			config.jira.setUser(row.getCell(fieldMap.get(InternalConfig.DESTINATION_JIRA_USER)) != null
+					? row.getCell(fieldMap.get(InternalConfig.DESTINATION_JIRA_USER)).getStringCellValue()
+					: null);
 			config.ado = new AccessConfig(
-				"", //URL is fully encoded into externalLink
-				null, //BoardName not relevant
-				row.getCell(fieldMap.get(InternalConfig.DESTINATION_ADO_TOKEN)) != null ? row.getCell(fieldMap.get(InternalConfig.DESTINATION_ADO_TOKEN)).getStringCellValue(): null);
-			config.ado.setUser(row.getCell(fieldMap.get(InternalConfig.DESTINATION_ADO_USER)) != null ? row.getCell(fieldMap.get(InternalConfig.DESTINATION_ADO_USER)).getStringCellValue(): null);
+					"", // URL is fully encoded into externalLink
+					null, // BoardName not relevant
+					row.getCell(fieldMap.get(InternalConfig.DESTINATION_ADO_TOKEN)) != null
+							? row.getCell(fieldMap.get(InternalConfig.DESTINATION_ADO_TOKEN)).getStringCellValue()
+							: null);
+			config.ado.setUser(row.getCell(fieldMap.get(InternalConfig.DESTINATION_ADO_USER)) != null
+					? row.getCell(fieldMap.get(InternalConfig.DESTINATION_ADO_USER)).getStringCellValue()
+					: null);
 		}
 
 		if (config.ignoreCards) {
@@ -520,7 +535,7 @@ public class XlUtils {
 										for (int j = 0; j < boardUsers.size(); j++) {
 											if (realUser.id.equals(boardUsers.get(j).userId)) {
 												usersToPut.add(realUser.id);
-												usernames += (i != 0)?",":"" + users[i] ;
+												usernames += (i != 0) ? "," : "" + users[i];
 											}
 										}
 									} else {
@@ -535,7 +550,7 @@ public class XlUtils {
 									bba.boardIds = (String[]) ArrayUtils.add(bids, brd.id);
 									bba.userIds = usersToPut.toArray(new String[0]);
 									bba.boardRole = "boardUser";
-								
+
 									d.p(Debug.INFO, "Adding users \"%s\" to board \"%s\"\n", usernames, brd.title);
 									LkUtils.updateBoardUsers(cfg, accessCfg, bba);
 									flds.put("assignedUserIds", usersToPut.toArray());
@@ -763,7 +778,7 @@ public class XlUtils {
 		}
 		return null;
 	}
-	
+
 	public static ArrayList<Card> getDstCards(InternalConfig cfg) {
 		ArrayList<Card> cards = new ArrayList<>();
 		XSSFSheet itemSht = cfg.wb.getSheet(XlUtils.validateSheetName(cfg.source.getBoardName()));
