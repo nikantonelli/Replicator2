@@ -90,7 +90,9 @@ public class Main {
 				config = XlUtils.setConfig(config, row, fieldMap);
 
 				//If there is no info in the config, go to next.
-				if (config == null) continue;
+				if (config.validConfig == false) {
+					continue;
+				}
 				
 				config.source.setCache(new AccessCache());
 				config.destination.setCache(new AccessCache());

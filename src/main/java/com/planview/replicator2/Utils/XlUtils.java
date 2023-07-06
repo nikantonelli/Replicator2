@@ -66,6 +66,8 @@ public class XlUtils {
 	public static InternalConfig setConfig(InternalConfig config, Row row, HashMap<String, Integer> fieldMap) {
 
 		d.setLevel(config.debugLevel);
+		
+		config.validConfig = true;	//Reset prior to the tests below
 
 		if (config.nameExtension) {
 			NumberFormat nf = DecimalFormat.getInstance();
@@ -90,14 +92,16 @@ public class XlUtils {
 		ac = row.getCell(fieldMap.get(InternalConfig.SOURCE_APIKEY_COLUMN));
 
 		if ((uc == null) || (bc == null) || (ac == null)) {
-			return null;
+			config.validConfig = false;
+			return config;
 		}
 		String u,b,a;
 		u = uc.getStringCellValue();
 		b = bc.getStringCellValue();
 		a = ac.getStringCellValue();
 		if ((u.length() == 0) || (b.length() == 0) || (a.length() == 0)){	//Excel cell is there but empty
-			return null;
+			config.validConfig = false;
+			return config;
 		}
 		config.source = new AccessConfig(u, b, a);
 		uc = row.getCell(fieldMap.get(InternalConfig.DESTINATION_URL_COLUMN));
@@ -105,13 +109,15 @@ public class XlUtils {
 		ac = row.getCell(fieldMap.get(InternalConfig.DESTINATION_APIKEY_COLUMN));
 
 		if ((uc == null) || (bc == null) || (ac == null)) {
-			return null;
+			config.validConfig = false;
+			return config;
 		}
 		u = uc.getStringCellValue();
 		b = bc.getStringCellValue();
 		a = ac.getStringCellValue();
 		if ((u.length() == 0) || (b.length() == 0) || (a.length() == 0)){	//Excel cell is there but empty
-			return null;
+			config.validConfig = false;
+			return config;
 		}
 		config.destination = new AccessConfig(u, b, a);
 

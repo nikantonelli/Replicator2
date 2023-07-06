@@ -70,5 +70,6 @@ public class InternalConfig {
 	public Boolean tasktop = false;
 	public Boolean updateLevels = false;
 	public Boolean deleteXlsx = false;
+	public Boolean validConfig = true;
 }
 
