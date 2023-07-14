@@ -340,7 +340,7 @@ public class Exporter {
 		Integer item = itmRow;
 
 		Row iRow = cfg.itemSheet.createRow(itmRow);
-		d.p(Debug.INFO, "Creating row %d for id: %s (%s)\n", itmRow, c.id,
+		d.p(Debug.INFO, "Creating row %d for %sid: %s (%s)\n", itmRow, (c.archivedOn != null)?"(archived) ":"", c.id,
 				((c.customId.value != null) && (c.customId.value.length() != 0)) ? c.customId.value : c.title);
 		// We need to keep a separate counter for the fields we actually write out
 		Integer fieldCounter = 1;
