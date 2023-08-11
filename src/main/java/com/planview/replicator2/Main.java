@@ -19,6 +19,7 @@ import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFFormulaEvaluator;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
@@ -83,11 +84,13 @@ public class Main {
 			Row row = null;
 			rowItr = configSht.iterator();
 			row = rowItr.next(); // Move past headers
+			
 			while (rowItr.hasNext()) {
 				Boolean ok = true;
 				row = rowItr.next();
 				// 1
 				config = XlUtils.setConfig(config, row, fieldMap);
+				XSSFFormulaEvaluator.evaluateAllFormulaCells(config.wb); //Don't need to do this every time, but this makes it easier to code
 
 				//If there is no info in the config, go to next.
 				if (config.validConfig == false) {

@@ -40,7 +40,6 @@ public class BoardCreator {
 			dst = dst.substring(0, dst.length() - 1);
 
 		JSONObject details = new JSONObject();
-		details.put("allowPlanviewIntegration", true);
 		Board dstBrd = LkUtils.getBoardByTitle(cfg, cfg.destination);
 		Board srcBrd = LkUtils.getBoardByTitle(cfg, cfg.source);
 
@@ -80,6 +79,12 @@ public class BoardCreator {
 					dstBrd.id,
 					cfg.destination.getBoardName());
 		}
+
+		//For Portfolios, we need to toggle this flag
+		details.put("allowPlanviewIntegration", false);
+		LkUtils.updateBoard(cfg, cfg.destination, dstBrd.id, details);
+
+		details.put("allowPlanviewIntegration", true);
 		details.put("allowUsersToDeleteCards", srcBrd.allowUsersToDeleteCards);
 		details.put("baseWipOnCardSize", srcBrd.baseWipOnCardSize);
 		details.put("description", srcBrd.description);
