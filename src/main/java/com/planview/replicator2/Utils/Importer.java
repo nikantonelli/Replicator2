@@ -229,7 +229,7 @@ public class Importer {
 				if (brd != null)
 					flds.put("boardId", brd.id);
 				else {
-					d.p(Debug.ERROR, "Could not create card on board \"%s\" with details: \"%s\"\n",
+					d.p(Debug.ERROR, "Could not find board \"%s\" to create card with details: \"%s\"\n",
 							cfg.destination.getBoardName(),
 							flds.toString());
 					System.exit(18);

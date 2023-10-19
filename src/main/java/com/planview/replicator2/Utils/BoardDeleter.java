@@ -21,7 +21,7 @@ public class BoardDeleter {
 			// Tell PRM integration that we are leaving the system
 			JSONObject details = new JSONObject();
 			details.put("allowPlanviewIntegration", false);
-			d.p(Debug.INFO, "Removing board \"%s\" (ID: %s) from Planview Integration", brd.id, brd.title);
+			d.p(Debug.INFO, "Removing board \"%s\" (ID: %s) from Planview Integration\n", brd.id, brd.title);
 			LkUtils.updateBoard(cfg, cfg.destination, brd.id, details);
 
 			if (LkUtils.deleteBoard(cfg, cfg.destination)) {
