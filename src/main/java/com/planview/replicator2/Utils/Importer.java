@@ -251,8 +251,8 @@ public class Importer {
 					} else {
 						limit = foundLane.cardCount + 1;
 					}
-					if (limit >= foundLane.wipLimit) {
-						flds.append("wipOverrideComment", "Forced by Replicator");
+					if ((foundLane.wipLimit > 0) && (limit >= foundLane.wipLimit)) {
+						flds.put("wipOverrideComment", "Forced by Replicator");
 					}
 				}
 			}
